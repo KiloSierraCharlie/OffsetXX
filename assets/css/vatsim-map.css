@@ -1,0 +1,84 @@
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#VATSIM-MAP, #PageContent {
+  position: absolute;
+  bottom: 0px;
+  min-height: 346px;
+  top: 60px;
+  background-color: #FFFFFF;
+  left: 80px;
+  right: 0px;
+  overflow: auto;
+  border-right: 1px solid #000;
+}
+#PageContent{
+  font-size: 12px;
+}
+#PageContent table{
+  width: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Verdana";
+}
+
+#menu {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 60px;
+  min-width: 440px;
+  background-color: #222121;
+  right: 0px;
+  border-bottom: 1px solid #000;
+}
+
+#menu .logo{
+  position:absolute;
+  width: 170px;
+  height: 60px;
+  left: 10px;
+  top:2.5px;
+  background-image: url( "../graphics/site_logo.png" );
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#menu .navmenu{
+  position: absolute;
+  top:2.5px;
+  left: 100px;
+  color: white;
+  list-style: none;
+}
+
+#menu .navmenu li{
+  display: table-cell;
+  float: left;
+  padding-left:15px;
+  padding-right:15px;
+  height:60px;
+}
+
+#menu .navmenu .active {
+  color: #ffa500 !important;  
+}
+
+#sidebar {
+  position: absolute;
+  width: 80px;
+  bottom: 0px;
+  min-height: 346px;
+  top: 60px;
+  background-color: #222121;
+  left: 0px;
+  overflow: auto;
+  border-right: 1px solid #000;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
