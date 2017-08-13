@@ -11,8 +11,12 @@
     <?php echo file_get_contents( "assets/sidebar.html" ); ?>
     <div id="PageContent">
       <?php
-      $wk = date( "W" );
-      $yr = date( "Y" );
+      if( isset( $_GET["week"] ) ){ $wk = (int)$_GET["week"]; }else{ $wk = date( "W" ); }
+      if( isset( $_GET["year"] ) ){ $yr = (int)$_GET["year"]; }else{ $yr = date( "Y" ); }
+      
+      $lstyr = $yr;
+      $nxtyr = $yr;
+      
       if( ( $lstwk = $wk-1 ) == 0 ){
         $lstwk = 12;
         $lstyr -= 1;
@@ -22,7 +26,10 @@
         $nxtyr += 1;
       }
       ?>
-      <a href="atcLeague?week=<?php echo $lstwk; ?>&year=<?php echo $lstyr; ?>" align="left" id="weekprevious">Previous Week</a><h2 id="title" align="center"></h2><a href="atcLeague?week=<?php echo $nxtwk; ?>&year=<?php echo $nxtyr; ?>" align="right" id="weekafter">Subsequent Week</a>
+      <h2 id="title" align="center"></h2>
+      <h3><a href="atcLeague?week=<?php echo $lstwk; ?>&year=<?php echo $lstyr; ?>" style="position:absolute;left:10%;" id="weekprevious">Previous Week (<?php echo $lstwk . ", " . $lstyr; ?>)</a> <a href="atcLeague?week=<?php echo $nxtwk; ?>&year=<?php echo $nxtyr; ?>" style="position:absolute;right:10%;" id="weekafter">Subsequent Week (<?php echo $nxtwk . ", " . $nxtyr; ?>)</a></h3>
+      <br>
+      <br>
       <table class="ATCLeague-DATA">
         <thead>
           <tr>

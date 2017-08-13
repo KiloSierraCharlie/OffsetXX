@@ -79,6 +79,8 @@ html, body {
   border-right: 1px solid #000;
 }
 a {
-  color: white;
   text-decoration: none;
+}
+.navmenu a{
+  color: white;
 }

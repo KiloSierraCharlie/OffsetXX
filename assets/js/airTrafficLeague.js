@@ -19,11 +19,11 @@ var week;
 if( (week = $.urlParam( "week" )) == null ){
   week = new Date().format('W');
 }
-if( (year = $.urlParam( "year" )) == null || ){
+if( (year = $.urlParam( "year" )) == null ){
   year = new Date().format('Y');
 }
 
-$("#title").append("Week " + week + " ATC statistics");
+$("#title").append("Week " + week + " of " + year + ", ATC statistics");
 $.getJSON( "/data/member-data-" + week + "-" + year + ".json", function( data ) {
   var sorted = Object.keys( data ).sort(function(a,b){
     return data[ b ]["total"]-data[ a ]["total"]
@@ -34,7 +34,7 @@ $.getJSON( "/data/member-data-" + week + "-" + year + ".json", function( data ) 
     var stations = 0;
     $.each( data[val]["atc"], function( k, v ) {
       stations += 1;
-      totalConnections += v.length
+      totalConnections += v.length;
       if( v.length > largest[1] ){
         largest[0] = k;
         largest[1] = v.length;
