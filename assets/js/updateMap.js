@@ -2,6 +2,7 @@ var map;
 var infowindow;
 
 var drawnAircraft = {};
+var drawnATC = {};
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('VATSIM-MAP'), {
@@ -69,21 +70,48 @@ function drawLocalAircraft(){
         });
         $.each( drawnAircraft, function( key, val ) {
             if( currentAircraft.indexOf( key ) == -1 ){
-                console.log( key );
                 drawnAircraft[ key ].setMap( null );
                 delete drawnAircraft[ key ];
             }
         });
         
-        
     });
-    
-    
     
 }
 
 function drawLocalAirTraffic(){
   
-  
+    var bounds = map.getBounds();
+    var currentATC = [];
+    $.getJSON( "/API/getOnlineATC.php?ne=" + JSON.stringify( bounds.getNorthEast() ) + "&sw=" + JSON.stringify( bounds.getSouthWest() ), function( data ) {
+        $.each( data, function( key, val ){
+                        
+            var Symbol = {
+                path: 'M46.3,35.3H50c0.2,0,0.4-0.1,0.5-0.4l3.7-16.4c0.1-0.3-0.2-0.6-0.5-0.6h-5.4c-0.3,0-0.5-0.2-0.5-0.5v-5.1  c0-0.3-0.2-0.5-0.5-0.5h-8.2c-0.3,0-0.5-0.2-0.5-0.5V7c0-0.3,0.2-0.5,0.5-0.5h4.1c0.3,0,0.5-0.2,0.5-0.5V1.5c0-0.3-0.2-0.5-0.5-0.5  H28.6c-0.3,0-0.5,0.2-0.5,0.5V6c0,0.3,0.2,0.5,0.5,0.5h4.1c0.3,0,0.5,0.2,0.5,0.5v4.6c0,0.3-0.2,0.5-0.5,0.5h-8.2  c-0.3,0-0.5,0.2-0.5,0.5v5.1c0,0.3-0.2,0.5-0.5,0.5h-5.4c-0.3,0-0.5,0.3-0.5,0.6L21.5,35c0,0.2,0.2,0.4,0.5,0.4h3.7  c0.3,0,0.5,0.2,0.5,0.5v25c0,0.3-0.2,0.5-0.5,0.5h-6.8c-0.3,0-0.5,0.2-0.5,0.5v8.8c0,0.3,0.2,0.5,0.5,0.5h34.2  c0.3,0,0.5-0.2,0.5-0.5v-8.8c0-0.3-0.2-0.5-0.5-0.5h-6.8c-0.3,0-0.5-0.2-0.5-0.5v-25C45.9,35.5,46.1,35.3,46.3,35.3z M49.5,22.1  l-2.4,9.3c-0.1,0.2-0.2,0.3-0.4,0.3h-7.4c-0.3,0-0.5-0.2-0.5-0.5V22c0-0.3,0.2-0.5,0.5-0.5H49C49.3,21.5,49.5,21.8,49.5,22.1z   M24.9,31.4l-2.4-9.3c-0.1-0.3,0.1-0.6,0.4-0.6h9.8c0.3,0,0.5,0.2,0.5,0.5v9.3c0,0.3-0.2,0.5-0.5,0.5h-7.4  C25.2,31.8,25,31.6,24.9,31.4z',
+                scale: 0.3, 
+                strokeOpacity: 1,
+                color: 'black',
+                strokeWeight: 1,
+            };
+            
+            if( drawnATC[ val["callsign"] ] == undefined ){
+            
+                drawnATC[ val["callsign"] ] = new google.maps.Marker({
+                    position: {lat: parseFloat( val["latitude"] ), lng: parseFloat( val["longitude"] )},
+                    map: map,
+                    icon: Symbol,
+                });
+                
+            }
+            currentATC.push( val["callsign"] );
+        });
+        $.each( drawnATC, function( key, val ) {
+            if( currentATC.indexOf( key ) == -1 ){
+                drawnATC[ key ].setMap( null );
+                delete drawnATC[ key ];
+            }
+        });
+        
+    });
   
 }
